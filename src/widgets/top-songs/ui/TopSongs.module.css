@@ -1,0 +1,42 @@
+.section {
+  padding: 48px var(--page-gutter);
+}
+
+.headerRow,
+.row {
+  display: grid;
+  grid-template-columns: 40px 1fr 160px 160px 80px 48px;
+  gap: 0 16px;
+  align-items: center;
+}
+
+.albumCell,
+.playsCell {
+  /* visible by default */
+}
+
+/* ── Tablet: hide Album column ── */
+@media (max-width: 900px) {
+  .headerRow,
+  .row {
+    grid-template-columns: 40px 1fr 160px 80px 48px;
+  }
+  .albumCell {
+    display: none;
+  }
+}
+
+/* ── Mobile: hide Album + Plays ── */
+@media (max-width: 640px) {
+  .section {
+    padding: 32px var(--page-gutter);
+  }
+  .headerRow,
+  .row {
+    grid-template-columns: 28px 1fr 52px 32px;
+  }
+  .albumCell,
+  .playsCell {
+    display: none;
+  }
+}

@@ -1,0 +1,67 @@
+.root {
+  padding: 0 var(--page-gutter);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.searchBar {
+  display: flex;
+}
+
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-strong);
+  padding: 0;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+/* ── Tablet: hide search label ── */
+@media (max-width: 900px) {
+  .searchBar {
+    display: none;
+  }
+}
+
+/* ── Mobile: hamburger nav ── */
+@media (max-width: 640px) {
+  .nav {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    background: var(--white);
+    z-index: 999;
+    padding: 24px var(--page-gutter) 40px;
+    gap: 0;
+  }
+  .mobileMenuClose {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 32px;
+  }
+  .mobileNavLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+}

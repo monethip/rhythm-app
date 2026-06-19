@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+/* Rhythm design tokens */
+@import './colors.css';
+@import './typography.css';
+@import './spacing.css';
+@import './base.css';
+
+/* ── Responsive page gutter ── */
+:root { --page-gutter: 56px; }
+@media (max-width: 1024px) { :root { --page-gutter: 40px; } }
+@media (max-width: 640px)  { :root { --page-gutter: 20px; } }
