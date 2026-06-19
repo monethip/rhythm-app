@@ -4,6 +4,7 @@ import { Header } from '@/widgets/header';
 import { PlayerBar } from '@/widgets/player-bar';
 import { PlayerProvider } from '@/features/play-track';
 import { LikedTracksProvider } from '@/features/like-track';
+import { SpotifyAuthProvider } from '@/features/spotify-auth';
 
 export const metadata: Metadata = {
   title: 'Rhythm — Find your rhythm',
@@ -19,13 +20,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <PlayerProvider>
-          <LikedTracksProvider>
-            <Header />
-            {children}
-            <PlayerBar />
-          </LikedTracksProvider>
-        </PlayerProvider>
+        <SpotifyAuthProvider>
+          <PlayerProvider>
+            <LikedTracksProvider>
+              <Header />
+              {children}
+              <PlayerBar />
+            </LikedTracksProvider>
+          </PlayerProvider>
+        </SpotifyAuthProvider>
       </body>
     </html>
   );

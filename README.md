@@ -17,7 +17,7 @@ A music browsing web app built with Next.js 15 and React 19.
 - TypeScript
 - CSS Modules with a custom design system
 
-## Getting Started
+## Getting 
 
 ```bash
 npm install

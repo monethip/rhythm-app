@@ -6,4 +6,5 @@ export interface Album {
   cover: string;
   genre: string;
   tracks: string[];
+  spotifyId?: string;
 }

@@ -9,6 +9,7 @@ export const ALBUMS: Album[] = [
     cover: '/albums/reputation.png',
     genre: 'Pop',
     tracks: ['rep-1', 'rep-2', 'rep-3', 'rep-4', 'rep-5', 'rep-6'],
+    spotifyId: '6DEjYFkNZh67HP7R9PSZvv',
   },
   {
     id: 'lover',
@@ -18,6 +19,7 @@ export const ALBUMS: Album[] = [
     cover: '/albums/lover.png',
     genre: 'Pop',
     tracks: ['lov-1', 'lov-2', 'lov-3', 'lov-4', 'lov-5'],
+    spotifyId: '1NAmidJlEaVgA3MpcPFYGq',
   },
   {
     id: 'tortured-poets',
@@ -27,6 +29,7 @@ export const ALBUMS: Album[] = [
     cover: '/albums/hotmess.png',
     genre: 'Indie Pop',
     tracks: ['ttp-1', 'ttp-2', 'ttp-3', 'ttp-4', 'ttp-5'],
+    spotifyId: '5H7ixXZfsNMGbIE5OBSpcb',
   },
   {
     id: 'girls',
@@ -36,6 +39,7 @@ export const ALBUMS: Album[] = [
     cover: '/albums/girls.png',
     genre: 'K-Pop',
     tracks: ['aes-1', 'aes-2', 'aes-3', 'aes-4'],
+    spotifyId: '7gNqMzEoFnYIuJ4RbJbJUB',
   },
   {
     id: 'showgirl',
