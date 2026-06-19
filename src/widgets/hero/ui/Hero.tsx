@@ -1,18 +1,46 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import gsap from 'gsap';
 import { Marquee } from '@/shared/ui/marquee';
 import styles from './Hero.module.css';
 
 export function Hero() {
+  const textRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (textRef.current) {
+        gsap.from(Array.from(textRef.current.children), {
+          opacity: 0,
+          y: 28,
+          duration: 0.65,
+          stagger: 0.1,
+          ease: 'power2.out',
+        });
+      }
+      if (photoRef.current) {
+        gsap.from(photoRef.current, {
+          opacity: 0,
+          x: 40,
+          duration: 0.8,
+          delay: 0.15,
+          ease: 'power2.out',
+        });
+      }
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section>
       {/* Split hero */}
       <div className={styles.grid}>
 
         {/* Left: text */}
-        <div className={styles.textCol}>
+        <div className={styles.textCol} ref={textRef}>
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             fontFamily: 'var(--font-display)', fontSize: 'var(--text-xs)',
@@ -94,7 +122,7 @@ export function Hero() {
         </div>
 
         {/* Right: photo collage */}
-        <div className={styles.photoCol}>
+        <div className={styles.photoCol} ref={photoRef}>
           <div className={styles.mainPhoto}>
             <Image src="/albums/girls.png" alt="Top artist" fill style={{ objectFit: 'cover' }} sizes="(max-width:768px) 100vw, 420px" priority />
           </div>

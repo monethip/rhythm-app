@@ -1,6 +1,10 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 import { LikeButton } from '@/shared/ui/like-button';
 import { usePlayer } from '@/features/play-track';
 import { useLikedTracks } from '@/features/like-track';
@@ -112,6 +116,26 @@ function TopRow({ trackId, index }: { trackId: string; index: number }) {
 }
 
 export function TopSongs() {
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (!listRef.current) return;
+      gsap.from(Array.from(listRef.current.children), {
+        opacity: 0,
+        x: -24,
+        duration: 0.45,
+        stagger: 0.07,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: listRef.current,
+          start: 'top 85%',
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section className={styles.section}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
@@ -149,9 +173,11 @@ export function TopSongs() {
         <div />
       </div>
 
-      {TOP_5_IDS.map((id, i) => (
-        <TopRow key={id} trackId={id} index={i} />
-      ))}
+      <div ref={listRef}>
+        {TOP_5_IDS.map((id, i) => (
+          <TopRow key={id} trackId={id} index={i} />
+        ))}
+      </div>
     </section>
   );
 }

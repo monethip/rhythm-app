@@ -1,5 +1,9 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 import { LikeButton } from '@/shared/ui/like-button';
 import { usePlayer } from '@/features/play-track';
 import { useLikedTracks } from '@/features/like-track';
@@ -141,6 +145,26 @@ function TrackRow({ track, index, tracks }: { track: Track; index: number; track
 }
 
 export function TrackList({ tracks, showHeader = true, style }: TrackListProps) {
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (!listRef.current) return;
+      gsap.from(Array.from(listRef.current.children), {
+        opacity: 0,
+        y: 16,
+        duration: 0.4,
+        stagger: 0.06,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: listRef.current,
+          start: 'top 90%',
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, [tracks]);
+
   return (
     <div style={{ width: '100%', ...style }}>
       {showHeader && (
@@ -164,7 +188,7 @@ export function TrackList({ tracks, showHeader = true, style }: TrackListProps) 
           <div />
         </div>
       )}
-      <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <div ref={listRef} style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
         {tracks.map((track, i) => (
           <TrackRow key={track.id} track={track} index={i} tracks={tracks} />
         ))}

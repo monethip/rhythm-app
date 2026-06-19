@@ -1,7 +1,11 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 import { PlayButton } from '@/shared/ui/play-button';
 import { StarBurst } from '@/shared/ui/star-burst';
 import { Button } from '@/shared/ui/button';
@@ -116,6 +120,26 @@ function CtaCard() {
 }
 
 export function AlbumGrid({ albums, title, tag, showCta = false }: AlbumGridProps) {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (!gridRef.current) return;
+      gsap.from(Array.from(gridRef.current.children), {
+        opacity: 0,
+        y: 32,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: 'top 85%',
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, [albums]);
+
   return (
     <section className={styles.section}>
       {(title || tag) && (
@@ -149,7 +173,7 @@ export function AlbumGrid({ albums, title, tag, showCta = false }: AlbumGridProp
         </div>
       )}
 
-      <div className={styles.grid}>
+      <div className={styles.grid} ref={gridRef}>
         {albums.map((album) => <AlbumCard key={album.id} album={album} />)}
         {showCta && <CtaCard />}
       </div>

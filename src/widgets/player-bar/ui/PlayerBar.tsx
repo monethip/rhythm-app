@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import Image from 'next/image';
 import { PlayButton } from '@/shared/ui/play-button';
 import { LikeButton } from '@/shared/ui/like-button';
@@ -12,12 +13,20 @@ export function PlayerBar() {
   const { currentTrack, isPlaying, toggle, next, prev } = usePlayer();
   const { isLiked, toggle: toggleLike } = useLikedTracks();
   const [progress, setProgress] = React.useState(0.3);
+  const barRef = useRef<HTMLDivElement>(null);
+  const hasAnimated = useRef(false);
 
   React.useEffect(() => {
     if (!isPlaying) return;
     const t = setInterval(() => setProgress((p) => (p >= 1 ? 0 : p + 0.001)), 300);
     return () => clearInterval(t);
   }, [isPlaying]);
+
+  useEffect(() => {
+    if (!barRef.current || hasAnimated.current) return;
+    hasAnimated.current = true;
+    gsap.from(barRef.current, { y: 80, duration: 0.45, ease: 'power2.out' });
+  }, [currentTrack]);
 
   if (!currentTrack) return null;
 
@@ -37,6 +46,7 @@ export function PlayerBar() {
 
   return (
     <div
+      ref={barRef}
       className={styles.root}
       style={{
         position: 'fixed', bottom: 0, left: 0, right: 0, height: 80,
